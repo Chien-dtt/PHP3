@@ -17,7 +17,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($users as $value) : ?>
+            <?php foreach ($listUsers as $value) : ?>
                 <tr>
                     <td><?= $value['id'] ?></td>
                     <td><?= $value['name'] ?></td>

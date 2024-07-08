@@ -27,7 +27,7 @@ Route::get('/test', function(){
     echo 'Hello World';
 });
 
-Route::get('/list-user',[UserController::class, 'showUser']);
+Route::get('/list-users',[UserController::class, 'showUser']);
 
 // Params và Slug
 
@@ -38,3 +38,13 @@ Route::get('/update-user',[UserController::class, 'updateUser']);
 Route::get('/get-user/{id}/{name?}',[UserController::class, 'getUser']);
 
 Route::get('/profile-user',[ChienController::class, 'profileChien']);
+
+Route::group(['prefix' => 'users', 'as' => 'users.'], function(){
+    Route::get('list-users', [UserController::class, 'listUsers'])->name('listUsers');
+
+    Route::get('add-users', [UserController::class, 'addUsers'])->name('addUsers');
+
+    Route::post('add-users', [UserController::class, 'addPostUsers'])->name('addPostUsers');
+
+    Route::get('delete-users/{idUser}', [UserController::class, 'deleteUser'])->name('deleteUser');
+});
