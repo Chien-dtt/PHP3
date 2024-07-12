@@ -228,4 +228,88 @@ class UserController extends Controller
         DB::table('users')->where('id', $idUser)->delete();
         return redirect()->route('users.listUsers');
     }
+
+
+
+
+
+    // Products
+
+
+    public function listProducts()
+    {
+        $listProducts = DB::table('product')
+            ->select('product.id', 'product.name', 'product.price','product.view', 'product.created_at', 'product.updated_at')
+            ->get();
+        return view('products/listProducts')->with([
+            'listProducts' => $listProducts
+        ]);
+    }
+
+    public function addProducts(){
+        $category = DB::table('category')->select('id', 'name')->get();
+        return view('products/addProducts')->with([
+            'category' => $category
+        ]);
+    }
+
+    
+
+    public function addPostProducts(Request $request){
+        $data = [
+            'name'        => $request->namePro,
+            'price'       => $request->pricePro,
+            'view'        => $request->viewPro,
+            'created_at'  => Carbon::now(),
+            'updated_at'  => Carbon::now(),
+        ];
+        DB::table('product')->insert($data);
+        return redirect()->route('products.listProducts');
+    }
+
+    public function deleteProduct($idProduct){
+        DB::table('product')->where('id', $idProduct)->delete();
+        return redirect()->route('products.listProducts');
+    }
+
+    function updateProduct($idProduct){
+        $category = DB::table('category')->select('id','name')->get();
+        $product = DB::table('product')->where('id',$idProduct)->first();
+        return view('products/updateProducts')->with([
+            'product' => $product,
+            'category' => $category
+        ]);
+    }
+
+    public function updatePostProducts(Request $request){
+        $data = [
+            'name'        => $request->namePro,
+            'price'       => $request->pricePro,
+            'view'        => $request->viewPro,
+            'created_at'  => Carbon::now(),
+            'updated_at'  => Carbon::now(),
+        ];
+        DB::table('product')->where('id', $request->idPro)->update($data);
+        return redirect()->route('products.listProducts');
+    }
+
+    public function test(){
+        return view('admin.products/list-product');
+    }
+    
+
 }
+// return $this->queryBuilder
+//         ->select(
+//             'p.id', 'p.category_id', 'p.name', 'p.img_thumbnail', 'p.created_at', 'p.updated_at',
+//             'c.name as c_name'
+//         )
+//         ->from($this->tableName, 'p')
+//         ->innerJoin('p', 'categories', 'c', 'c.id = p.category_id')
+//         ->orderBy('p.id', 'desc')
+//         ->fetchAllAssociative();
+
+
+
+
+

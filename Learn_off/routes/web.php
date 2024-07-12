@@ -48,3 +48,23 @@ Route::group(['prefix' => 'users', 'as' => 'users.'], function(){
 
     Route::get('delete-users/{idUser}', [UserController::class, 'deleteUser'])->name('deleteUser');
 });
+
+
+Route::get('/list-products',[UserController::class, 'showProduct']);
+
+Route::group(['prefix' => 'products', 'as' => 'products.'], function(){
+    Route::get('list-products', [UserController::class, 'listProducts'])->name('listProducts');
+
+    Route::get('add-products', [UserController::class, 'addProducts'])->name('addProducts');
+
+    Route::post('add-products', [UserController::class, 'addPostProducts'])->name('addPostProducts');
+
+    Route::get('delete-products/{idProduct}', [UserController::class, 'deleteProduct'])->name('deleteProduct');
+
+    Route::get('update-products/{idProduct}', [UserController::class, 'updateProduct'])->name('updateProduct');
+
+    Route::post('update-products/{idProduct}', [UserController::class, 'updatePostProduct'])->name('updatePostProduct');
+
+});
+
+Route::get('/test',[UserController::class,'test']);
