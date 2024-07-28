@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ChienController;
+use App\Http\Controllers\Admin\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,4 +68,20 @@ Route::group(['prefix' => 'products', 'as' => 'products.'], function(){
 
 });
 
-Route::get('/test',[UserController::class,'test']);
+Route::get('/test', function(){
+    return view('admin.products.list-product');
+});
+
+Route::get('/test2', function(){
+    return view('admin.products.add-product');
+});
+
+
+Route::group(['prefix' => 'admin', 'as' => '.admin'], function(){
+    Route::group(['prefix' => 'product', 'as' => '.product'], function(){
+        // http://127/0.0.1:8000/admin/products/.....
+        Route::get('/', [ProductController::class, 'listProducts'])->name('listProducts');
+
+        Route::get('add-product', [ProductController::class],'addProduct')->name('addProduct');
+    });
+});
